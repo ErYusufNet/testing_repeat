@@ -1,0 +1,12 @@
+# Virtual environment
+venv/
+.venv/
+
+# Robot Framework output
+results/
+log.html
+output.xml
+report.html
+selenium-screenshot-*.png
+*.pyc
+__pycache__/
