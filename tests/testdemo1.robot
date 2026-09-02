@@ -1,39 +1,28 @@
 *** Settings ***
-Documentation    Validate invalid login flow
-Resource        resource.robot
-Test Setup      open the browser with the Mortgage payment url
-Test Teardown   Close Browser session
+Documentation    To validate the Login form
+Library    SeleniumLibrary
+Test Teardown   Close Browser
+
 
 *** Variables ***
-${USERNAME_INPUT}               id=username
-${PASSWORD_INPUT}               id=password
-${SIGN_IN_BUTTON}               id=signInBtn
-${ERROR_MESSAGE_LOGIN}          css:.alert-danger
-${VALID_USERNAME}               rahulshettyacademy
-${INVALID_PASSWORD}             12345678
-${INVALID_LOGIN_ERROR_MESSAGE}  Incorrect username/password.
+${URL}    https://rahulshettyacademy.com/loginpagePractise/
+${error_message_login}    ss:.alert-danger
+
 
 *** Test Cases ***
-Validate Unsuccessful Login
-    [Documentation]    Verify that an incorrect username/password displays an error message
-    Login With Credentials    ${VALID_USERNAME}    ${INVALID_PASSWORD}
-    Verify Login Error Message    ${INVALID_LOGIN_ERROR_MESSAGE}
+Validate UnSuccesful login
+    Open Browser    ${URL}    Chrome
+    Maximize Browser Window
+    Fill the login form
+    wait until it checks and display error message
+    verify error message is correct
 
 *** Keywords ***
-Input Login Credentials
-    [Arguments]    ${username}    ${password}
-    Input Text    ${USERNAME_INPUT}    ${username}
-    Input Text    ${PASSWORD_INPUT}    ${password}
-
-Submit Login
-    Click Button    ${SIGN_IN_BUTTON}
-
-Login With Credentials
-    [Arguments]    ${username}    ${password}
-    Input Login Credentials    ${username}    ${password}
-    Submit Login
-
-Verify Login Error Message
-    [Arguments]    ${expected_message}
-    Wait Until Element Is Visible    ${ERROR_MESSAGE_LOGIN}
-    Element Text Should Be    ${ERROR_MESSAGE_LOGIN}    ${expected_message}
+Fill the login form
+    Input Text    id=username    rahulshettyacademy
+    Input Text    id=password    12345678
+    Click Button    id=signInBtn
+wait until it checks and display error message
+    Wait Until Element Is Visible    ${error_message_login}
+verify error message is correct
+    Element Text Should Be    ${error_message_login}    Incorrect username/password.
