@@ -40,7 +40,7 @@ Wait Until Element Is located in the page
 Verify Card titles in the Shop page
     @{card_titles} =  Create List    iphone X     Samsung Note 8      Nokia Edge      BlackBerry
     ${card_elements} =  Get WebElements    css:.card-title
-    FOR  ${card_element}    IN      ${card_elements}
+    FOR  ${card_element}    IN      @{card_elements}
         Log    ${card_element.text}
     END
 
