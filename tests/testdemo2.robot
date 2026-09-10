@@ -68,17 +68,13 @@ Fill the Login details and select user option
     Input Text    ${USERNAME_INPUT}    rahulshettyacademy
     Input Text    ${PASSWORD_INPUT}    Learning@830$3mK2
     Select Radio Button    radio    user
-    Wait Until Element Is Visible    okayBtn    timeout=10s
+    Wait Until Element Is Visible    css:.modal-body
     Click Button    okayBtn
-    Execute Javascript
-    ...    var m = document.getElementById('myModal');
-    ...    if (m) { m.style.display = 'none'; m.classList.remove('show'); }
-    ...    document.body.classList.remove('modal-open');
-    ...    var bd = document.querySelector('.modal-backdrop');
-    ...    if (bd) { bd.parentNode.removeChild(bd); }
-    Wait Until Element Is Not Visible    id:myModal    timeout=10s
+    Wait Until Element Is Not Visible   css:.modal-body
     Select From List By Value    css:select.form-control    teach
+    Select Checkbox    terms
     Click Button    ${SIGN_IN_BUTTON}
     Sleep    5s
+
 
     
