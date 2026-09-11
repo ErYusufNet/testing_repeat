@@ -1,7 +1,9 @@
 *** Settings ***
 Documentation    To validate the Login form
 Library    SeleniumLibrary
-Test Teardown   Close Browser
+Test Setup      Open Login Page
+Test Teardown   Close Browser Session
+Resource    resource.robot
 
 
 *** Variables ***
