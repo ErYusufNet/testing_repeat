@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation    To validate the Login form
 Library    SeleniumLibrary
+Library    re
 Test Setup      Open Login Page
 Test Teardown   Close Browser Session
 Resource    resource.robot
@@ -12,19 +13,29 @@ ${error_message_login}    ss:.alert-danger
 
 
 *** Test Cases ***
-Validate UnSuccesful login
-    Open Browser    ${URL}    Chrome
-    Maximize Browser Window
-    Fill the login form
-    wait until it checks and display error message
-    verify error message is correct
+Validate child window functionality
+    select the link of child window
+    Verify the user switched to child window
+    grab the email id in the child window
+    switch to parent window and enter the email
+
+
 
 *** Keywords ***
-Fill the login form
-    Input Text    id=username    rahulshettyacademy
-    Input Text    id=password    12345678
-    Click Button    id=signInBtn
-wait until it checks and display error message
-    Wait Until Element Is Visible    ${error_message_login}
-verify error message is correct
-    Element Text Should Be    ${error_message_login}    Incorrect username/password.
+select the link of child window
+    Click Link    css:.blinkingText
+    Sleep    5
+Verify the user switched to child window
+    Switch Window    NEW
+    Element Text Should Be    css:.inner-box   DOCUMENTS REQUEST
+
+
+Grab the Email id in the Child Window
+    ${email_text} =    Get Text    css:a[href*='mailto']
+    Log    ${email_text}
+    Set Global Variable    ${email_text}
+switch to parent window and enter the email
+    Switch Window    MAIN
+    Title Should Be    LoginPage Practise | Rahul Shetty Academy
+    Input Text    id=username    ${email_text}
+    Sleep    5
